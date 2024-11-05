@@ -1,0 +1,216 @@
+{
+  "name": "Email Tags",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "simple": false,
+        "filters": {},
+        "options": {}
+      },
+      "id": "c7a94c3c-04c5-464c-8705-eb07aac88413",
+      "name": "Gmail Trigger",
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        120,
+        480
+      ],
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Y5naNHGmnmy8Q7Tt",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "gpt-3.5-turbo",
+        "options": {}
+      },
+      "id": "c0b8f8df-dcba-4dd0-8b0d-b8cb6b6522a4",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        340,
+        700
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "DJM4KQKkOherUPCC",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputText": "={{ $json.text }}",
+        "categories": {
+          "categories": [
+            {
+              "category": "Billing",
+              "description": "The \"Billing\" tag should be applied to any emails related to financial transactions, invoices, or account payment information. This includes monthly or annual subscription invoices, one-time purchase receipts, notifications about failed payments or past due balances, correspondence with the billing or accounts team, and requests for payment information or W-9 forms. Emails tagged as \"Billing\" should be reviewed promptly to ensure bills are paid on time and account information is up to date. Prompt attention to these emails is critical to avoid service disruptions or late fees."
+            },
+            {
+              "category": "Read Later",
+              "description": "The \"Read Later\" tag should be used for emails that contain useful information, but do not require immediate action. This includes newsletters or updates from industry publications, product promotions or new feature announcements, invitations to webinars or conferences, tips and tutorials, and requests for input or feedback that can wait. These types of emails often provide valuable knowledge or insights, but can be reviewed at a more convenient time when you have the opportunity to read through the content in depth. Emails tagged as \"Read Later\" can be reviewed periodically, rather than requiring an immediate response."
+            },
+            {
+              "category": "Urgent",
+              "description": "The \"Urgent\" tag should be reserved for time-sensitive emails that require prompt attention, often within 1 business day. Typical \"Urgent\" emails include client requests with strict deadlines, support tickets about critical issues or outages, notifications of account suspension or termination, legal or compliance-related communications, and messages from executives or other high-priority senders. These emails take priority and should be reviewed and responded to as quickly as possible to avoid negative impacts on the business or client relationships. Prompt action is essential for emails marked as \"Urgent\"."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9fdb9267-1c6e-4c2e-95ba-37c126e24161",
+      "name": "Text Classifier",
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "typeVersion": 1,
+      "position": [
+        340,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_3066392486840517930"
+        ]
+      },
+      "id": "0b415542-1863-4bde-b41a-fcf5e11408e2",
+      "name": "Gmail",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        820,
+        480
+      ],
+      "webhookId": "a20402f8-84b7-423f-b731-83070a191923",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Y5naNHGmnmy8Q7Tt",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_5554031860998989352"
+        ]
+      },
+      "id": "f0ef76dd-4b77-468c-a262-3e57d512cd1f",
+      "name": "Gmail1",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        820,
+        320
+      ],
+      "webhookId": "a20402f8-84b7-423f-b731-83070a191923",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Y5naNHGmnmy8Q7Tt",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "addLabels",
+        "messageId": "={{ $json.id }}",
+        "labelIds": [
+          "Label_8472239942232742856"
+        ]
+      },
+      "id": "35c6e290-94a6-4f62-b577-28f1afaf8fa6",
+      "name": "Gmail2",
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        820,
+        660
+      ],
+      "webhookId": "a20402f8-84b7-423f-b731-83070a191923",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "Y5naNHGmnmy8Q7Tt",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Text Classifier",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Text Classifier": {
+      "main": [
+        [
+          {
+            "node": "Gmail1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Gmail2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "ae5d67d3-040a-4bf5-8423-198ac5d80a89",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "7d66c31e824ccc27a1c63c6d94d056670e6dff78822308132a15fb3242c8d136"
+  },
+  "id": "vai4LgSyEck5knon",
+  "tags": []
+}
