@@ -6,67 +6,51 @@
         "operation": "getAll",
         "calendar": {
           "__rl": true,
-          "mode": "list",
-          "value": "xyz@gmail.com",
-          "cachedResultName": "xyz@gmail.com"
+          "value": "=",
+          "mode": "id"
         },
         "options": {
           "timeMin": "={{$fromAI(\"date\",\"the date after which to fetch the messages in format YYYY-MM-DDTHH:MM:SS\")}}",
           "fields": "=items(summary, start(dateTime))"
         }
       },
-      "id": "c70236ea-91ab-4e47-b6f6-63a70ede5d3c",
+      "id": "f0099678-326c-4afc-9115-e7ae3d2c1027",
       "name": "Google Calendar",
       "type": "n8n-nodes-base.googleCalendarTool",
       "position": [
-        2000,
-        700
+        760,
+        2040
       ],
       "typeVersion": 1.1,
       "credentials": {
         "googleCalendarOAuth2Api": {
-          "id": "cQcpn2A6Il8QU9Tn",
+          "id": "aSRa5foKbA6eOXfU",
           "name": "Google Calendar account"
         }
       }
     },
     {
       "parameters": {
-        "sessionIdType": "customKey",
-        "sessionKey": "={{ $('Listen for incoming events').first().json.message.from.id }}"
-      },
-      "id": "d2287bea-de47-4180-8ee6-55d4ab1a89da",
-      "name": "Window Buffer Memory",
-      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
-      "position": [
-        1760,
-        700
-      ],
-      "typeVersion": 1.2
-    },
-    {
-      "parameters": {
         "operation": "getAll",
+        "simple": false,
         "filters": {
-          "labelIds": [
-            "INBOX",
-            "UNREAD"
-          ],
-          "readStatus": "both",
+          "labelIds": [],
+          "readStatus": "unread",
           "receivedAfter": "={{$fromAI(\"date\",\"the date after which to fetch the messages in format YYYY-MM-DDTHH:MM:SS\")}}"
-        }
+        },
+        "options": {}
       },
-      "id": "fa955731-86f6-4e4d-8604-dab5f52dee87",
+      "id": "a226148e-6809-43f4-9146-f33e34b2ffb4",
       "name": "Get Email",
       "type": "n8n-nodes-base.gmailTool",
       "position": [
-        1880,
-        700
+        620,
+        2040
       ],
       "typeVersion": 2.1,
       "credentials": {
         "gmailOAuth2": {
-          "id": "Y5naNHGmnmy8Q7Tt",
+          "id": "OYmhJj17WHHjTGOW",
           "name": "Gmail account"
         }
       }
@@ -76,17 +60,17 @@
         "model": "gpt-3.5-turbo",
         "options": {}
       },
-      "id": "46511f47-1687-4cbe-ae41-ceb205ed1f11",
+      "id": "f3c35cda-41f9-4331-aae4-cffe8e829f7a",
       "name": "OpenAI Chat Model",
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "position": [
-        1640,
-        700
+        360,
+        2040
       ],
       "typeVersion": 1,
       "credentials": {
         "openAiApi": {
-          "id": "DJM4KQKkOherUPCC",
+          "id": "0dY59DnOZ7DGcvXJ",
           "name": "OpenAi account"
         }
       }
@@ -98,18 +82,18 @@
         ],
         "additionalFields": {}
       },
-      "id": "64fe44db-af19-43eb-9ff1-de0a72a9e645",
+      "id": "7ab93d65-f231-4273-b6d8-466e9ee14b94",
       "name": "Listen for incoming events",
       "type": "n8n-nodes-base.telegramTrigger",
       "position": [
-        840,
-        360
+        -320,
+        1720
       ],
       "webhookId": "322dce18-f93e-4f86-b9b1-3305519b7834",
       "typeVersion": 1,
       "credentials": {
         "telegramApi": {
-          "id": "qXDXPTiPGdpH6qJ9",
+          "id": "2HBUfyyTdGUWiRko",
           "name": "Telegram account"
         }
       }
@@ -123,17 +107,17 @@
           "parse_mode": "Markdown"
         }
       },
-      "id": "e35c04ff-a050-4564-8c1b-5b22b556872f",
+      "id": "ca0c5381-5ee5-4eeb-bd29-47fd4cc032d5",
       "name": "Telegram",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        2280,
-        380
+        1540,
+        1740
       ],
       "typeVersion": 1.1,
       "credentials": {
         "telegramApi": {
-          "id": "qXDXPTiPGdpH6qJ9",
+          "id": "2HBUfyyTdGUWiRko",
           "name": "Telegram account"
         }
       },
@@ -143,12 +127,11 @@
       "parameters": {
         "conditions": {
           "options": {
-            "version": 2,
-            "leftValue": "",
             "caseSensitive": true,
-            "typeValidation": "strict"
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
           },
-          "combinator": "and",
           "conditions": [
             {
               "id": "a0bf9719-4272-46f6-ab3b-eda6f7b44fd8",
@@ -160,16 +143,18 @@
               "leftValue": "={{ $json.message.text }}",
               "rightValue": ""
             }
-          ]
+          ],
+          "combinator": "and"
         },
+        "looseTypeValidation": true,
         "options": {}
       },
-      "id": "e791d4f8-2c19-4c14-a71e-39a04f22e944",
+      "id": "ab603d29-cf82-418b-be9b-8c629e2a2719",
       "name": "If",
       "type": "n8n-nodes-base.if",
       "position": [
-        1200,
-        360
+        40,
+        1720
       ],
       "typeVersion": 2.2
     },
@@ -185,12 +170,12 @@
         },
         "options": {}
       },
-      "id": "b67a2a93-517b-469e-aaa4-32c422710743",
+      "id": "fac46690-b0d2-4e41-999b-759b07ccc991",
       "name": "Voice or Text",
       "type": "n8n-nodes-base.set",
       "position": [
-        1020,
-        360
+        -140,
+        1720
       ],
       "typeVersion": 3.2
     },
@@ -199,18 +184,72 @@
         "resource": "file",
         "fileId": "={{ $('Listen for incoming events').item.json.message.voice.file_id }}"
       },
-      "id": "8105c39f-9e87-44c4-9215-b3777f0b4164",
+      "id": "59baa75f-75bd-417f-b688-2f66bbba0e68",
       "name": "Get Voice File",
       "type": "n8n-nodes-base.telegram",
       "position": [
-        1420,
-        220
+        260,
+        1560
       ],
       "typeVersion": 1.1,
       "credentials": {
         "telegramApi": {
-          "id": "qXDXPTiPGdpH6qJ9",
+          "id": "2HBUfyyTdGUWiRko",
           "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "user_documents",
+        "description": "Contains all the user's documents that you can check for context to answer user questions."
+      },
+      "id": "eb7772b6-1b62-4bbf-bac0-07419a12fe0f",
+      "name": "Retrieve Documents1",
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        2040
+      ]
+    },
+    {
+      "parameters": {
+        "model": "text-embedding-3-small",
+        "options": {}
+      },
+      "id": "8f83e8a8-9a81-4fab-9fcc-de3ede0810ff",
+      "name": "Embeddings OpenAI2",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1,
+      "position": [
+        1280,
+        2360
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "0dY59DnOZ7DGcvXJ",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "gpt-3.5-turbo",
+        "options": {}
+      },
+      "id": "c64a1cb5-649f-446b-8448-4e5c7529408e",
+      "name": "OpenAI Chat Model3",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        1380,
+        2220
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "0dY59DnOZ7DGcvXJ",
+          "name": "OpenAi account"
         }
       }
     },
@@ -220,18 +259,518 @@
         "operation": "transcribe",
         "options": {}
       },
-      "id": "5bd1788a-3d08-4eb3-8e03-3ce82f44d2a7",
+      "id": "1861f10f-b4ef-4c31-adef-9090b64f25ec",
       "name": "Speech to Text",
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "position": [
-        1600,
-        220
+        440,
+        1560
       ],
       "typeVersion": 1.3,
       "credentials": {
         "openAiApi": {
-          "id": "DJM4KQKkOherUPCC",
+          "id": "0dY59DnOZ7DGcvXJ",
           "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1COkn7E5hrL_b-4DuPXDLIuFboqgmONbvTn-rfEohmNI",
+          "mode": "list",
+          "cachedResultName": "Records",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1COkn7E5hrL_b-4DuPXDLIuFboqgmONbvTn-rfEohmNI/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1COkn7E5hrL_b-4DuPXDLIuFboqgmONbvTn-rfEohmNI/edit#gid=0"
+        },
+        "options": {}
+      },
+      "id": "875a7763-12da-487b-ae9c-f58933896787",
+      "name": "Google Sheets",
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.5,
+      "position": [
+        900,
+        2040
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "n5JUBq3EsnL1kUBD",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "options": {
+          "queryName": "match_documents"
+        }
+      },
+      "id": "b8c79a41-1fc9-42db-9582-9b57f96322cc",
+      "name": "Supabase Vector Store",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1,
+      "position": [
+        340,
+        620
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "gqg0qaiPW2axO59M",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "options": {
+          "queryName": "match_documents"
+        }
+      },
+      "id": "199b41f5-31c6-44d5-a7ca-d8502244dc21",
+      "name": "Insert into Supabase Vectorstore",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1,
+      "position": [
+        1140,
+        1120
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "gqg0qaiPW2axO59M",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "gpt-3.5-turbo",
+        "options": {}
+      },
+      "id": "83b66e3c-b7fb-4ddb-81ad-c314c521c245",
+      "name": "OpenAI Chat Model1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        620,
+        620
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "0dY59DnOZ7DGcvXJ",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "gpt-3.5-turbo",
+        "options": {}
+      },
+      "id": "090533b2-06f1-4109-81d4-902086342400",
+      "name": "OpenAI Chat Model2",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [
+        -140,
+        700
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "0dY59DnOZ7DGcvXJ",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('When chat message received').item.json.chatInput }}",
+        "options": {
+          "systemMessage": "You are a personal assistant who helps answer questions from a corpus of documents when you don't know the answer yourself."
+        }
+      },
+      "id": "ade2d3cf-47b4-4246-b91c-24352261718a",
+      "name": "RAG AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [
+        -40,
+        480
+      ]
+    },
+    {
+      "parameters": {
+        "public": true,
+        "options": {}
+      },
+      "id": "efe81952-4ab2-4523-ba59-acb1f7c9c1a8",
+      "name": "When chat message received",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -360,
+        480
+      ],
+      "webhookId": "e985d15f-b2f6-456d-be15-97e0b1544a40"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "10646eae-ae46-4327-a4dc-9987c2d76173",
+              "name": "file_id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ab22d113-89a5-4107-956f-3f556a2b902f",
+      "name": "Set File ID",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -20,
+        1120
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "delete",
+        "tableId": "documents",
+        "filterType": "string",
+        "filterString": "=metadata->>file_id=like.*{{ $json.file_id }}*"
+      },
+      "id": "a2770d86-963b-479d-b4a1-a5655ed4ceaa",
+      "name": "Delete Old Doc Rows",
+      "type": "n8n-nodes-base.supabase",
+      "typeVersion": 1,
+      "position": [
+        300,
+        1120
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "supabaseApi": {
+          "id": "gqg0qaiPW2axO59M",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "6353eaa5-3c49-40d4-b626-a026f1e90fb0",
+      "name": "Recursive Character Text Splitter",
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        1440,
+        1480
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "6b65d1c5-d5bb-414c-a9ae-e74172b61e7f",
+      "name": "Postgres Chat Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1,
+      "position": [
+        0,
+        700
+      ],
+      "notesInFlow": false,
+      "credentials": {
+        "postgres": {
+          "id": "IpIGjKYA0Pll35wx",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "text-embedding-3-small",
+        "options": {}
+      },
+      "id": "a9521b54-39bb-4fcd-b031-c6f1a11bd419",
+      "name": "Embeddings OpenAI",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1,
+      "position": [
+        500,
+        740
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "0dY59DnOZ7DGcvXJ",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "id": "18590915-9d7e-4f18-a532-ac2f48cb7968",
+      "name": "Extract Document Text",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        860,
+        1120
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "16Gc_so0SZc-QClcyozpGFwfVhj-igv1S",
+          "mode": "id"
+        },
+        "event": "fileUpdated",
+        "options": {}
+      },
+      "id": "b49c3017-17d9-4a54-a421-5fe0b39b524c",
+      "name": "File Updated",
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        -360,
+        1240
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "AESuBIlNofMmlAii",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "16Gc_so0SZc-QClcyozpGFwfVhj-igv1S",
+          "mode": "id"
+        },
+        "event": "fileCreated",
+        "options": {}
+      },
+      "id": "d82e1049-03c8-45af-9d8b-843e72c29f9d",
+      "name": "File Created",
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        -360,
+        980
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "AESuBIlNofMmlAii",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $('Set File ID').item.json.file_id }}",
+          "mode": "id"
+        },
+        "options": {
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "text/plain"
+            }
+          }
+        }
+      },
+      "id": "544b9852-d715-4a3e-a7dd-95a2d384b2cd",
+      "name": "Download File",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        600,
+        1120
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "AESuBIlNofMmlAii",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "user_documents",
+        "description": "Contains all the user's documents that you can check for context to answer user questions."
+      },
+      "id": "3e6f584d-352b-434e-af40-4fa4a2a03a89",
+      "name": "Retrieve Documents",
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "typeVersion": 1,
+      "position": [
+        460,
+        460
+      ]
+    },
+    {
+      "parameters": {
+        "model": "text-embedding-3-small",
+        "options": {}
+      },
+      "id": "65079f7b-ff73-4c57-9bbc-fd14ecdfee6a",
+      "name": "Embeddings OpenAI1",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1,
+      "position": [
+        1020,
+        1340
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "0dY59DnOZ7DGcvXJ",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsonMode": "expressionData",
+        "jsonData": "={{ $json.data }}",
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "=file_id",
+                "value": "={{ $('Set File ID').item.json.file_id }}"
+              }
+            ]
+          }
+        }
+      },
+      "id": "fd35b12d-2476-4790-8a8f-e2abfd8fb0cf",
+      "name": "Default Data Loader",
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        1240,
+        1320
+      ]
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "123"
+      },
+      "id": "7c5c68de-d3d9-443b-b673-e9888a8cd40a",
+      "name": "Postgres Chat Memory1",
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        480,
+        2040
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "IpIGjKYA0Pll35wx",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableName": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "options": {
+          "queryName": "match_documents"
+        }
+      },
+      "id": "6e78e7a6-925c-4299-8d8f-b631502ed6bd",
+      "name": "Supabase Vector Store1",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreSupabase",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        2220
+      ],
+      "credentials": {
+        "supabaseApi": {
+          "id": "gqg0qaiPW2axO59M",
+          "name": "Supabase account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "descriptionType": "manual",
+        "toolDescription": "Send a draft via email.",
+        "resource": "draft",
+        "subject": "={{$fromAI('subject')}}",
+        "message": "={{$fromAI('contents')}}",
+        "options": {}
+      },
+      "id": "d8d9320f-984b-46f0-b477-940ca744cfe8",
+      "name": "Gmail",
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        1040,
+        2040
+      ],
+      "webhookId": "0796f44c-c254-4bcd-9af1-da244d08c6c2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "OYmhJj17WHHjTGOW",
+          "name": "Gmail account"
         }
       }
     },
@@ -240,17 +779,43 @@
         "promptType": "define",
         "text": "={{ $json.text }}",
         "options": {
-          "systemMessage": "=You are a helpful assistant.\n\nToday's date is {{ $now }}.\n\nGuidelines:\n- When fetching emails, filter out any promotional emails. \n- When summarizing emails, include Sender, Message date, subject, and brief summary of email.\n- if the user did not specify a date in the request assume they are asking for today\n- When answering questions about calendar events, filter out events that don't apply to the question.  For example, the question is about events for today, only reply with events for today. Don't mention future events if it's more than 1 week away"
+          "systemMessage": "=You are a helpful assistant.\n\nToday's date is {{ $now }}.\n\nGuidelines:\n- When fetching emails, filter out any promotional emails. \n- When summarizing emails, include Sender, Message date, subject, and brief summary of email.\n- if the user did not specify a date in the request assume they are asking for today\n- When answering questions about calendar events, filter out events that don't apply to the question.  For example, the question is about events for today, only reply with events for today. Don't mention future events if it's more than 1 week away\n\nThe AI agent should retrieve emails using the \"Get Email\" node. It will filter messages based on specific criteria, such as keywords like \"lead\" or \"follow-up,\" or emails from known senders. This allows the agent to identify relevant leads or actionable information.\n\nIt will check the calendar using the \"Google Calendar\" node to fetch upcoming events within a defined date range. This ensures the agent can verify availability for meetings or follow-ups without scheduling conflicts.\n\nThe agent will access the Google Sheet using the \"Google Sheets\" node to retrieve lead information. The sheet contains two columns: \"Name\" for the lead’s full name and \"Email\" for their contact information. This data will be used to personalize communication.\n\nThe agent will create personalized email drafts with the \"Create Draft\" Gmail node. These drafts will use the lead’s name and email from the sheet, along with context from the retrieved emails. If a meeting is being proposed, the agent will include times based on calendar availability. The email content will be tailored to encourage engagement while remaining professional and relevant."
         }
       },
-      "id": "759b975f-d17c-4386-a5b3-12413f0361f4",
+      "id": "a3309c56-a91f-4b38-9b8e-2f4249f44f03",
       "name": "Jarvis",
       "type": "@n8n/n8n-nodes-langchain.agent",
       "position": [
-        1780,
-        380
+        600,
+        1740
       ],
       "typeVersion": 1.6
+    },
+    {
+      "parameters": {
+        "content": "## RAG automation by [Cole Medin](https://github.com/coleam00) \n",
+        "height": 103.04397898681029,
+        "color": 5
+      },
+      "id": "c9f492d0-c5c0-4956-b1c3-4971bde00928",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -800,
+        740
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "a1abd452-add6-4cc2-a7c4-af65d0c0e093",
+      "name": "Calculator",
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        1160,
+        2040
+      ]
     }
   ],
   "pinData": {},
@@ -328,23 +893,45 @@
         ]
       ]
     },
-    "Window Buffer Memory": {
-      "ai_memory": [
-        [
-          {
-            "node": "Jarvis",
-            "type": "ai_memory",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Listen for incoming events": {
       "main": [
         [
           {
             "node": "Voice or Text",
             "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI2": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store1",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Retrieve Documents1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve Documents1": {
+      "ai_tool": [
+        [
+          {
+            "node": "Jarvis",
+            "type": "ai_tool",
             "index": 0
           }
         ]
@@ -361,6 +948,226 @@
         ]
       ]
     },
+    "Google Sheets": {
+      "ai_tool": [
+        [
+          {
+            "node": "Jarvis",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "RAG AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "RAG AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set File ID": {
+      "main": [
+        [
+          {
+            "node": "Delete Old Doc Rows",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "RAG AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Supabase Vector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Document Text": {
+      "main": [
+        [
+          {
+            "node": "Insert into Supabase Vectorstore",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "File Updated": {
+      "main": [
+        [
+          {
+            "node": "Set File ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "File Created": {
+      "main": [
+        [
+          {
+            "node": "Set File ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download File": {
+      "main": [
+        [
+          {
+            "node": "Extract Document Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete Old Doc Rows": {
+      "main": [
+        [
+          {
+            "node": "Download File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Retrieve Documents": {
+      "ai_tool": [
+        [
+          {
+            "node": "RAG AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Retrieve Documents",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Vector Store": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Retrieve Documents",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Insert into Supabase Vectorstore",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Insert into Supabase Vectorstore",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "Jarvis",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Supabase Vector Store1": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Retrieve Documents1",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "Jarvis",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
     "Jarvis": {
       "main": [
         [
@@ -371,16 +1178,28 @@
           }
         ]
       ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "Jarvis",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": true,
-  "settings": {},
-  "versionId": "209ac1ed-0896-4cc3-a521-127d7c2be9ab",
-  "meta": {
-    "templateId": "2462",
-    "templateCredsSetupCompleted": true,
-    "instanceId": "7d66c31e824ccc27a1c63c6d94d056670e6dff78822308132a15fb3242c8d136"
+  "settings": {
+    "executionOrder": "v1"
   },
-  "id": "xwFgTXkXnj1jUoup",
+  "versionId": "2dc52c0f-9b96-4b23-b6d0-d229f8bcce74",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "36be9fd52b2d8c5a4f96b351cec387aab513390ae4135b5586a2faa381dce2e6"
+  },
+  "id": "akTrT2zXk1IQTK8d",
   "tags": []
 }
